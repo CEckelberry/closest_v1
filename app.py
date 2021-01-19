@@ -82,6 +82,8 @@ def signup():
         return redirect("/")
 
     else:
+        # form.email.errors = ["Please input a valid email address"]
+        # form.phone_number.errors = ["Please input a valid phone number"]
         return render_template("signup.html", form=form)
 
 
@@ -101,7 +103,7 @@ def login():
 
         flash("Invalid credentials.", "danger")
 
-    return render_template("users/login.html", form=form)
+    return render_template("login.html", form=form)
 
 
 @app.route("/logout")
