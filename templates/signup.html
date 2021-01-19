@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block body_class %}Signup{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5">
+        <!-- Default form register -->
+        <h2 class="join-message text-center mt-5">Join Closest today.</h2>
+        <form class="text-center border border-light p-5" action="/signup">
+            {{ form.hidden_tag() }}
+
+            {% for field in form if field.widget.input_type != 'hidden' %}
+              {% for error in field.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
+            {% endfor %}
+            <p class="h4 mb-4">Sign up</p>
+
+            <div class="form-row mb-4">
+                <div class="col">
+                    <!-- Username -->
+                    <input type="text" id="Username" class="form-control" placeholder="Username">
+                </div>
+            </div>
+
+            <!-- Password -->
+            <input type="password" id="Password" class="form-control" placeholder="Password" aria-describedby="PasswordHelpBlock">
+            <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                At least 8 characters and 1 digit
+            </small>            
+
+            <!-- E-mail -->
+            <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+            <!-- Phone number -->
+            <input type="text" id="defaultRegisterPhonePassword" class="form-control" placeholder="Phone number" aria-describedby="PhoneHelpBlock">
+            <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
+                (Optional)
+            </small>
+
+            <!-- Profile Image URL-->
+            <input type="text" id="ProfileImageURL" class="form-control" placeholder="Profile Image URL" aria-describedby="ProfileImageURL">
+ 
+            <!-- Sign up button -->
+            <button class="font-weight-bold btn winter-neva-gradient color-block btn-block my-4 waves-effect z-depth-0" type="submit"">Sign up</button>
+
+        </form>
+
+  </div>
+</div>
+
+{% endblock %}
