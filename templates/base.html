@@ -14,6 +14,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body class="{% block body_class %}{% endblock %}">
@@ -35,27 +37,27 @@
       {% else %}
       <li>
         <a href="/users/{{ g.user.id }}">
-          <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
+          <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}" height="20%" width="20%" class="">
         </a>
       </li>
-      <li><a class="font-weight-bold" href="/favorites">Favorites</a></li>
-      <li><a class="font-weight-bold pl-4 pr-2" href="/logout">Log out</a></li>
+      <li><a class="font-weight-bold ml-3 mt-2" href="/favorites">Favorites</a></li>
+      <li><a class="font-weight-bold pl-4 pr-2 mt-2" href="/logout">Log out</a></li>
       {% endif %}
     </ul>
   </div>
 </nav>
-<div class="container">
-  {% for category, message in get_flashed_messages(with_categories=True) %}
-  <div class="alert alert-{{ category }}">{{ message }}</div>
-  {% endfor %}
-
-  {% block content %}
-  {% endblock %}
-
-</div>
     <!-- MDB -->
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <div class="container">
+            {% for category, message in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{ category }}" id="flash">{{ message }}</div>
+            {% endfor %}
+          
+            {% block content %}
+            {% endblock %}
+          
+          </div>
         <!-- Password Check -->
         <script src="/static/jquery.passtrength.js"></script>
         <!-- Bootstrap tooltips -->

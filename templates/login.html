@@ -7,15 +7,17 @@
 <div class="row justify-content-md-center">
     <div class="col-md-7 col-lg-5">
         <!-- Default form login -->
-        <form class="text-center border border-light p-5 mt-5" action="#!">
-
+        <form class="text-center border border-light p-5 mt-5" method="POST" action="/login">
+            {{ form.hidden_tag() }}
             <p class="h4 mb-4">Sign in</p>
 
-            <!-- Email -->
-            <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
 
-            <!-- Password -->
-            <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                {{ field(placeholder=field.label.text, class="form-control mt-4") }}
+                    {% for error in field.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+            {% endfor %}
 
             <!-- Sign in button -->
             <button class="font-weight-bold btn winter-neva-gradient color-block btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>

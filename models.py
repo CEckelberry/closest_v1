@@ -74,9 +74,15 @@ class Favorite(db.Model):
 
     description = db.Column(db.Text,)
 
-    latitude = db.Column(db.Float, nullable=False)
+    address = db.Column(db.Text, nullable=False)
 
-    longitude = db.Column(db.Float, nullable=False)
+    latitude = db.Column(db.Float,)
+
+    longitude = db.Column(db.Float,)
+
+    user_id = db.Column(
+        db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False,
+    )
 
     user = db.relationship("User")
 

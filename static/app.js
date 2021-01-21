@@ -16,3 +16,7 @@ $('#Password').passtrength({
     textStrong: "Strong",
     textVeryStrong: "Very Strong",
   });
+
+
+
+$('#flash').delay(1200).fadeOut(700)
