@@ -2,3 +2,9 @@
 	width: 42px;
 	border-radius: 42px;
 }
+
+#find-me {
+	border-radius: 100%;
+	height: 10rem;
+	width: 10rem;
+}
