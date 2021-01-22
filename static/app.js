@@ -1,3 +1,9 @@
+$(document).ready(function () {
+    $('#results_table').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+    });
+
+
 // Password Strength Checker
 
 $('#Password').passtrength({
@@ -52,3 +58,4 @@ function geoFindMe() {
   }
   
   document.querySelector('#find-me').addEventListener('click', geoFindMe);
+

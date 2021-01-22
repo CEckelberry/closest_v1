@@ -1,8 +1,9 @@
 import os
 import config
 import requests
+import json
 
-from flask import Flask, render_template, request, flash, redirect, session, g
+from flask import Flask, render_template, request, flash, redirect, session, g, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
@@ -147,9 +148,47 @@ def show_results(search):
     print(f"search: {search}")
 
     geocode_URL = f"https://geocode.search.hereapi.com/v1/geocode?q={search}&apiKey={HERE_API_KEY}"
-
     geocode_resp1 = requests.get(geocode_URL)
+    # print(geocode_resp1.text)
 
-    print(geocode_resp1.text)
+    resp_to_dict = json.loads(geocode_resp1.text)
+    # print(resp_to_dict)
+    search_lat_long = resp_to_dict["items"][0]["position"]
+    # print(lat_long)
+    here_search_latitude = search_lat_long["lat"]
+    here_search_longitude = search_lat_long["lng"]
+    # print(f"lat: {here_search_latitude} and long: {here_search_longitude}")
 
-    return render_template("results.html")
+    public_transit_URL = f"https://transit.hereapi.com/v8/stations?in={here_search_latitude},{here_search_longitude}&return=transport,address&maxPlaces=25&apiKey={HERE_API_KEY}"
+    transit_resp2 = requests.get(public_transit_URL)
+    print(transit_resp2.text)
+    stations_dict = json.loads(transit_resp2.text)
+
+    closest_station_name = stations_dict["stations"][0]["place"]["name"]
+    closest_station_name_og = closest_station_name
+    closest_station_name = closest_station_name.replace("&", "%26")
+    closest_station_transport = stations_dict["stations"][0]["transports"][0]["mode"]
+    combined_address_search = (
+        f"{closest_station_name} {closest_station_transport} station"
+    )
+    print(combined_address_search)
+
+    closest_station_address = stations_dict["stations"][0]["place"]["address"]
+    address_string = str(
+        closest_station_address["houseNumber"]
+        + " "
+        + closest_station_address["street"]
+        + " "
+        + closest_station_address["city"]
+        + " "
+        + closest_station_address["postalCode"]
+    )
+    # print(f"address string: {address_string}")
+
+    google_map_URL = f"https://www.google.com/maps/embed/v1/place?key={GOOGLE_API_KEY}&q={combined_address_search}&center={here_search_latitude},{here_search_longitude}"
+    print(google_map_URL)
+    return render_template(
+        "results.html",
+        google_map_URL=google_map_URL,
+        closest_station_name_og=closest_station_name_og,
+    )

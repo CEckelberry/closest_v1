@@ -8,3 +8,25 @@
 	height: 10rem;
 	width: 10rem;
 }
+
+html {
+	font-size: 1.5rem;
+}
+
+#map_icon {
+	top: 34%;
+}
+
+#map_result {
+	width: 100%;
+	height: 27rem;
+	display: block;
+	border-radius: 2%;
+}
+
+#col_div {
+	background-color: rgb(221, 221, 221);
+	padding-top: .70rem;
+	padding-bottom: .70rem;
+	border-radius: 2%;
+}

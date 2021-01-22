@@ -6,23 +6,25 @@
 
 
 <div class="row justify-content-md-center">
-    <div class="col-md-7 col-lg-5">
-        <h4 class="join-message text-center mt-5">Search by allowing access to your location or by address below!</h2>
-        <div class="text-center mt-3 mb-3">
+    <div class="col-md-9 col-lg-7">
+        <h4 class="join-message text-center mt-4 mb-5">Search by your location or address below!</h2>
+        <div class="text-center mt-4 mb-5">
             <button class="btn blue-gradient btn-lg text-center" id="find-me">Show my location</button><br/>
             <p id="status" class="text-center"></p>
             <a id="map-link" target="_blank" class="text-center"></a>
         </div>
-        <form class="form-inline md-form mr-auto mb-4 text-center ml-5 pl-4" method="POST">
-            {{ form.hidden_tag() }}
+        <form class="md-form mr-auto form-lg text-center input-with-post-icon border border-light p-5 mt-5" method="POST">
+                <i class="fas fa-map input-prefix" id="map_icon"></i>
+                {{ form.hidden_tag() }}
 
-            {% for field in form if field.widget.input_type != 'hidden' %}
-                {{ field(placeholder=field.label.text, class="form-control mr-sm-2") }}
-                    {% for error in field.errors %}
-                        <small class="text-danger">{{ error }}</small>
-                    {% endfor %}
-            {% endfor %}
-            <button class="btn winter-neva-gradient font-weight-bold waves-effect btn-rounded btn-sm my-0" type="submit">Search</button>
+                {% for field in form if field.widget.input_type != 'hidden' %}
+                    {{ field(class="form-control") }}
+                        {% for error in field.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                {% endfor %}
+                <label class="position-relative" for="address ">Address</label>
+                <button class="btn btn-block winter-neva-gradient font-weight-bold waves-effect btn-rounded btn-sm my-0" type="submit">Search</button>    
         </form>
     </div>
 </div>

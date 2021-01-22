@@ -14,6 +14,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <!-- MDBootstrap Datatables  -->
+    <link href="/static/datatables.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -36,11 +38,11 @@
       <li><a class="font-weight-bold pl-4 pr-2" href="/login">Log in</a></li>
       {% else %}
       <li>
-        <a href="/users/{{ g.user.id }}">
+        <a class="mt-2"href="/users/{{ g.user.id }}">
           <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}" height="20%" width="20%" class="">
         </a>
       </li>
-      <li><a class="font-weight-bold ml-3 mt-2" href="/favorites">Favorites</a></li>
+      <li><a class="font-weight-bold ml-4 mt-2" href="/favorites">Favorites</a></li>
       <li><a class="font-weight-bold pl-4 pr-2 mt-2" href="/logout">Log out</a></li>
       {% endif %}
     </ul>
@@ -66,6 +68,8 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+        <!-- MDBootstrap Datatables  -->
+        <script type="text/javascript" src="/static/datatables.min.js"></script>
         <!-- Axios -->
         <script src="https://unpkg.com/axios/dist/axios.js"></script>
         <!-- App.js JS-->
