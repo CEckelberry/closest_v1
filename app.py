@@ -145,7 +145,7 @@ def home_page():
 @app.route("/results/<string:search>", methods=["GET", "POST"])
 def show_results(search):
 
-    print(f"search: {search}")
+    # print(f"search: {search}")
 
     geocode_URL = f"https://geocode.search.hereapi.com/v1/geocode?q={search}&apiKey={HERE_API_KEY}"
     geocode_resp1 = requests.get(geocode_URL)
@@ -159,9 +159,9 @@ def show_results(search):
     here_search_longitude = search_lat_long["lng"]
     # print(f"lat: {here_search_latitude} and long: {here_search_longitude}")
 
-    public_transit_URL = f"https://transit.hereapi.com/v8/stations?in={here_search_latitude},{here_search_longitude}&return=transport,address&maxPlaces=25&apiKey={HERE_API_KEY}"
+    public_transit_URL = f"https://transit.hereapi.com/v8/stations?in={here_search_latitude},{here_search_longitude}&return=transport,address&maxPlaces=50&apiKey={HERE_API_KEY}"
     transit_resp2 = requests.get(public_transit_URL)
-    print(transit_resp2.text)
+    # print(transit_resp2.text)
     stations_dict = json.loads(transit_resp2.text)
 
     closest_station_name = stations_dict["stations"][0]["place"]["name"]
@@ -171,7 +171,7 @@ def show_results(search):
     combined_address_search = (
         f"{closest_station_name} {closest_station_transport} station"
     )
-    print(combined_address_search)
+    # print(combined_address_search)
 
     closest_station_address = stations_dict["stations"][0]["place"]["address"]
     address_string = str(
@@ -186,9 +186,43 @@ def show_results(search):
     # print(f"address string: {address_string}")
 
     google_map_URL = f"https://www.google.com/maps/embed/v1/place?key={GOOGLE_API_KEY}&q={combined_address_search}&center={here_search_latitude},{here_search_longitude}"
-    print(google_map_URL)
+    # print(google_map_URL)
+
+    table_array = []
+
+    stations_array = stations_dict["stations"]
+    # print(stations_array)
+    length = len(stations_array)
+    # print(f"length of stations array: {length}")
+    for x in range(len(stations_array)):
+        print(stations_array[x]["place"]["address"])
+        row_array = []
+        row_array.append(stations_array[x]["place"]["name"])
+        try:
+            row_array.append(
+                str(
+                    stations_array[x]["place"]["address"]["houseNumber"]
+                    + " "
+                    + stations_array[x]["place"]["address"]["street"]
+                    + " "
+                    + stations_array[x]["place"]["address"]["city"]
+                    + " "
+                    + stations_array[x]["place"]["address"]["postalCode"]
+                )
+            )
+        except KeyError:
+            row_array.append("Exact Address Not Found")
+
+        row_array.append(stations_array[x]["transports"][0]["headsign"])
+        row_array.append(stations_array[x]["transports"][0]["mode"])
+
+        table_array.append(row_array)
+
+    # print(table_array)
+
     return render_template(
         "results.html",
         google_map_URL=google_map_URL,
         closest_station_name_og=closest_station_name_og,
+        table_array=table_array,
     )
