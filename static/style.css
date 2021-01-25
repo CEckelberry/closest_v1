@@ -30,3 +30,15 @@ html {
 	padding-bottom: .70rem;
 	border-radius: 2%;
 }
+
+a {
+	text-decoration: none;
+	display: block;
+}
+
+#favorite_star {
+	margin-top: 1rem !important;
+	position: absolute;
+	right: 14%;
+	top: 21%;
+}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body_class %}Show Profile{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-9 col-lg-7">
+        <h1 class="Display-4 text-center mt-3"><b>Profile Information:</b></h1>
+          <!-- Avatar -->
+        <div class="avatar mx-auto white text-center">
+            <img src="{{user.image_url}}" class="rounded-circle"
+            alt="avatar">
+        </div>
+        <div class="card mt-3">
+            <div class="card-body text-center">
+                <h5 class="card-title"><b>Username</b></h5>    
+                <p>{{user.username}}</p>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-body text-center">
+                <h5 class="card-title"><b>Email</b></h5>    
+                <p>{{user.email}}</p>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-body text-center">
+                <h5 class="card-title"><b>Phone Number</b></h5>    
+                <p>{{user.phone_number}}</p>
+            </div>
+        </div>
+        <a class="font-weight-bold btn winter-neva-gradient color-block btn-block my-4 waves-effect z-depth-0" href="/users/{{user.id}}/edit">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}

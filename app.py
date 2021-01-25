@@ -3,7 +3,17 @@ import config
 import requests
 import json
 
-from flask import Flask, render_template, request, flash, redirect, session, g, jsonify
+from flask import (
+    Flask,
+    render_template,
+    request,
+    flash,
+    redirect,
+    session,
+    g,
+    jsonify,
+    make_response,
+)
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
@@ -52,6 +62,10 @@ def do_logout():
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+
+
+##############################################################################
+# Signup routes:
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -119,6 +133,10 @@ def logout():
     return redirect("/login")
 
 
+##############################################################################
+# Search/Results routes:
+
+
 @app.route("/", methods=["GET", "POST"])
 def home_page():
     form = SearchForm()
@@ -146,6 +164,9 @@ def home_page():
 def show_results(search):
 
     # print(f"search: {search}")
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect("/login")
 
     geocode_URL = f"https://geocode.search.hereapi.com/v1/geocode?q={search}&apiKey={HERE_API_KEY}"
     geocode_resp1 = requests.get(geocode_URL)
@@ -226,3 +247,72 @@ def show_results(search):
         closest_station_name_og=closest_station_name_og,
         table_array=table_array,
     )
+
+
+##############################################################################
+# User routes:
+
+
+@app.route("/users/<int:user_id>/")
+def show_profile(user_id):
+    """Show User Profile Information"""
+
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect("/login")
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template("user_profile.html", user=user)
+
+
+@app.route("/users/<int:user_id>/edit", methods=["GET", "POST"])
+def edit_profile(user_id):
+    """Edit User Profile Information """
+
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect("/login")
+
+    user = User.query.get_or_404(user_id)
+    form = EditUserForm(obj=user)
+
+    if form.validate_on_submit():
+        user.username = form.username.data
+        user.email = form.email.data
+        user.phone_number = form.phone_number.data
+        user.image_url = form.image_url.data
+        password = g.user.password
+
+        user_auth = User.authenticate(form.username.data, form.password.data)
+
+        if user_auth:
+            try:
+                db.session.commit()
+                return redirect(f"/users/{g.user.id}")
+            except SQLAlchemyError as e:
+                print(str(e))
+                db.session.rollback()
+                raise
+                return redirect(f"/users/{g.user.id}")
+        else:
+            flash("Incorrect Username/Password.", "danger")
+            return redirect(f"/users/{g.user.id}/")
+
+    return render_template("edit_profile.html", form=form, user=user)
+
+
+@app.route("/favorites/show")
+def favorites_show():
+    return render_template("favorites.html")
+
+
+@app.route("/favorites/add")
+def favorite_add():
+    headers = {"Content-Type": "application/json"}
+    return make_response("Add Worked", 200, headers=headers)
+
+
+@app.route("/favorites/<int:favorite_id>/delete")
+def favorite_delete(favorite_id):
+    return redirect("/favorites/show")

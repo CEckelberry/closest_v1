@@ -3,9 +3,9 @@
 {% block body_class %}Results{% endblock %}
 
 {% block content %}
-
 <div class="row justify-content-md-center">
-    <h1 class="mt-3 display-5 "><b>Closest Mass Transit</b></h1>
+    <h1 class="mt-3 display-5"><b>Closest Mass Transit</b></h1>
+    <div class="" id="favorite_star"><p>Favorite:  <i class="far fa-star" id="star"></i></p></div>
     <div class="col-md-11 col-lg-12 mt-3 z-depth-3" id="col_div">
         <div class="text-center">
             <iframe
@@ -38,12 +38,6 @@
                 {% endfor %}
               </tr> 
               {% endfor %}
-              <!-- <tr>
-                <td>16th St & Valencia St</td>
-                <td>461 Valencia St, San Francisco, CA 94103</td>
-                <td>Bay Street</td>
-                <td>Bus</td>
-              </tr> -->
             </tbody>
         </table>
     </div>     

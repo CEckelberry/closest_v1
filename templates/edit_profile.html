@@ -4,4 +4,39 @@
 
 {% block content %}
 
+<div class="row justify-content-md-center">
+    <div class="col-md-9 col-lg-7">
+        <h1 class="Display-4 text-center mt-3"><b>Edit Profile Information:</b></h1>
+        <form method="POST" id="user_form" class="md-form">
+            {{ form.hidden_tag() }}
+    
+            {% for field in form if field.widget.input_type != 'hidden' and field.name != 'password' %}
+                {% for error in field.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                <div class="form-group md-form">
+                    {{ field.label(class="mb-1") }}
+                    {{ field(placeholder=field.label.text, class="form-control") }}
+                </div>
+            {% endfor %}
+    
+            {% if form.password.errors %}
+              {% for error in form.password.errors %}
+                <span class="text-danger">
+                {{ error }}
+              </span>
+              {% endfor %}
+            {% endif %}
+            
+            {{ form.password(placeholder="Enter your password to confirm", class="form-control mt-3") }}
+
+            <div class="edit-btn-area">
+              <a href="/users/{{ user.id }}" class="btn btn-block btn-mdb-color mt-3">Cancel</a>
+              <button class="font-weight-bold btn winter-neva-gradient color-block btn-block my-4 waves-effect z-depth-0">Edit this user!</button>
+            </div>
+          </form>
+          
+    </div>
+</div>
+
 {% endblock %}

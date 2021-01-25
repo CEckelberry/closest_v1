@@ -23,7 +23,12 @@ $('#Password').passtrength({
     textVeryStrong: "Very Strong",
   });
 
-
+$(document).ready(function() {
+    $("#star").on("click", function() {
+        console.log("Clicked")
+        $(this).addClass('amber-text fas fa-star');
+    });
+});
 
 $('#flash').delay(1200).fadeOut(700)
 
@@ -58,4 +63,7 @@ function geoFindMe() {
   }
   
   document.querySelector('#find-me').addEventListener('click', geoFindMe);
+
+
+
 
