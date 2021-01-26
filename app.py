@@ -212,11 +212,11 @@ def show_results(search):
     table_array = []
 
     stations_array = stations_dict["stations"]
-    # print(stations_array)
+    print(stations_array)
     length = len(stations_array)
     # print(f"length of stations array: {length}")
     for x in range(len(stations_array)):
-        print(stations_array[x]["place"]["address"])
+        # print(stations_array[x]["place"]["address"])
         row_array = []
         row_array.append(stations_array[x]["place"]["name"])
         try:

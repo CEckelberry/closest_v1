@@ -1,6 +1,29 @@
 $(document).ready(function () {
-    $('#results_table').DataTable();
+    $('#results_table').DataTable({
+        "ordering": false
+    });
     $('.dataTables_length').addClass('bs-select');
+
+
+    $("#star").on("click", function() {
+        console.log("Clicked")
+        $(this).addClass('amber-text fas fa-star');
+
+        let name = $("#results_table")[0].tBodies[0].rows[0].cells[0].textContent
+        let address = $("#results_table")[0].tBodies[0].rows[0].cells[1].textContent
+        let map_image_url = $("#map_result")[0].src
+        console.log("name:" + name)
+        console.log("address:" + address)
+        console.log("map image url:" + map_image_url)
+
+        // let favorite_response = await axios.post()
+        
+
+        //not working  #######
+        //.children[1].firstElementChild.children[0].innerText
+        //[0].tBodies[0].rows[0].cells[0].textContent
+    });    
+    
     });
 
 
@@ -22,13 +45,6 @@ $('#Password').passtrength({
     textStrong: "Strong",
     textVeryStrong: "Very Strong",
   });
-
-$(document).ready(function() {
-    $("#star").on("click", function() {
-        console.log("Clicked")
-        $(this).addClass('amber-text fas fa-star');
-    });
-});
 
 $('#flash').delay(1200).fadeOut(700)
 

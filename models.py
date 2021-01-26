@@ -80,6 +80,8 @@ class Favorite(db.Model):
 
     longitude = db.Column(db.Float,)
 
+    map_image_url = db.Column(db.Text,)
+
     user_id = db.Column(
         db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False,
     )

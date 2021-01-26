@@ -19,7 +19,7 @@ html {
 
 #map_result {
 	width: 100%;
-	height: 27rem;
+	height: 34rem;
 	display: block;
 	border-radius: 2%;
 }
@@ -37,8 +37,6 @@ a {
 }
 
 #favorite_star {
-	margin-top: 1rem !important;
-	position: absolute;
-	right: 14%;
-	top: 21%;
+	margin-top: -2.75%;
+	margin-bottom: -2.75%;
 }
