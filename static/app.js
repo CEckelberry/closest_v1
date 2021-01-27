@@ -74,7 +74,8 @@ function geoFindMe() {
   
       status.textContent = '';
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-      mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+      //mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+      let search_response = axios.post(`/results/${latitude}+${longitude}`)
     }
   
     function error() {
