@@ -41,16 +41,16 @@ $(document).ready(function () {
 
 // Password Strength Checker
 
-$('#Password').passtrength({
+$('#password').passtrength({
     minChars: 6
 });
 
-$('#Password').passtrength({
+$('#password').passtrength({
       passwordToggle:true,
       eyeImg :"/static/images/eye.svg" // toggle icon
 });
 
-$('#Password').passtrength({
+$('#password').passtrength({
     tooltip: true,
     textWeak: "Weak",
     textMedium: "Medium",
