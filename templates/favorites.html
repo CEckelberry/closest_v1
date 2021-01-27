@@ -4,4 +4,44 @@
 
 {% block content %}
 
+<div class="row justify-content-md-center mt-3">
+    <div class="col-lg-10 col-md-10">
+        <h2 class="display-4 text-center">Search Your Favorites!</h2>
+        <input class="form-control" id="favoriteSearch" type="text" placeholder="Type something to search list items">
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-1 row-cols-lg-3 rows-cols-xl-4 mt-3" id="cards">
+    {% for favorite in favorites %}
+    <div class="col mb-4">
+         <!-- Card -->
+        <div class="card h-100">
+
+            <!--Card image-->
+            <div class="view overlay">
+            <iframe
+                frameborder="0" style="border:1"
+                src="{{favorite.map_image_url}}" allowfullscreen class="card-img-top z-depth-1">
+            </iframe>
+            </div>
+            <!--Card content-->
+            <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title">{{favorite.title}}</h4>
+            <!--Text-->
+            <p class="card-text">{{favorite.address}}</p>
+            </div>
+            <div class="card-footer text-muted text-center" id="trash">
+                <form action="/favorites/{{favorite.id}}/delete" method="POST">
+                        <button type="submit" class="trash"><i class="far fa-trash-alt fa-lg indigo-text"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+
 {% endblock %}

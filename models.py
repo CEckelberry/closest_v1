@@ -26,7 +26,7 @@ class User(db.Model):
 
     image_url = db.Column(db.Text, default="/static/images/default-pic.png",)
 
-    favorites = db.relationship("Favorite")
+    favorites = db.relationship("Favorite", cascade="all,delete")
 
     @classmethod
     def signup(cls, username, password, email, phone_number, image_url):
@@ -67,6 +67,8 @@ class User(db.Model):
 
 class Favorite(db.Model):
     """favorite stops to save"""
+
+    __tablename__ = "favorites"
 
     id = db.Column(db.Integer, primary_key=True)
 

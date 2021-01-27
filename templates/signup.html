@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="row justify-content-md-center">
-    <div class="col-md-7 col-lg-5">
+    <div class="col-md-10 col-lg-8">
         <!-- Default form register -->
         <h2 class="join-message text-center mt-5 font-weight-bold pb-4">Find the closest public transport options in seconds!</h2>
         <form class="text-center border border-light p-5" method="POST" id="user_form">
@@ -18,7 +18,7 @@
                 {% endfor %}
                 {{ field(placeholder=field.label.text, class="form-control mb-4") }}
             {% endfor %}
-            
+
             <button class="font-weight-bold btn winter-neva-gradient color-block btn-block my-4 waves-effect z-depth-0" type="submit"">Sign up</button>
         </form>
 

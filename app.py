@@ -184,6 +184,12 @@ def show_results(search):
     transit_resp2 = requests.get(public_transit_URL)
     # print(transit_resp2.text)
     stations_dict = json.loads(transit_resp2.text)
+    print(stations_dict)
+    if "notices" in stations_dict:
+        sad_message = (
+            f"Maybe try living somewhere closer to civilization, {g.user.username}"
+        )
+        return render_template("no_results.html", sad_message=sad_message)
 
     closest_station_name = stations_dict["stations"][0]["place"]["name"]
     closest_station_name_og = closest_station_name
@@ -304,15 +310,53 @@ def edit_profile(user_id):
 
 @app.route("/favorites/show")
 def favorites_show():
-    return render_template("favorites.html")
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect("/login")
+
+    favorites = Favorite.query.filter(Favorite.user_id == g.user.id).all()
+
+    return render_template("favorites.html", favorites=favorites)
 
 
-@app.route("/favorites/add")
+@app.route("/favorites/add", methods=["POST"])
 def favorite_add():
-    headers = {"Content-Type": "application/json"}
-    return make_response("Add Worked", 200, headers=headers)
+    data = request.json
+
+    user = User.query.get(g.user.id)
+
+    # print(data)
+
+    name = data["name"]
+    address = data["address"]
+    map_image_url = data["map_image_url"]
+
+    check_dupes = Favorite.query.filter(
+        Favorite.user_id == g.user.id, Favorite.map_image_url == map_image_url
+    ).count()
+
+    if check_dupes > 0:
+        return make_response("Already a Favorite!", 200)
+
+    new_favorite = Favorite(
+        title=name, address=address, map_image_url=map_image_url, user_id=user.id
+    )
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return make_response("Add Worked", 200)
 
 
-@app.route("/favorites/<int:favorite_id>/delete")
+@app.route("/favorites/<int:favorite_id>/delete", methods=["POST"])
 def favorite_delete(favorite_id):
+
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect("/login")
+
+    favorite = Favorite.query.get(favorite_id)
+
+    db.session.delete(favorite)
+    db.session.commit()
+
     return redirect("/favorites/show")

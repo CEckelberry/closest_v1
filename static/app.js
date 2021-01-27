@@ -6,24 +6,36 @@ $(document).ready(function () {
 
 
     $("#star").on("click", function() {
-        console.log("Clicked")
+        console.log("Clicked");
         $(this).addClass('amber-text fas fa-star');
 
-        let name = $("#results_table")[0].tBodies[0].rows[0].cells[0].textContent
-        let address = $("#results_table")[0].tBodies[0].rows[0].cells[1].textContent
-        let map_image_url = $("#map_result")[0].src
-        console.log("name:" + name)
-        console.log("address:" + address)
-        console.log("map image url:" + map_image_url)
+        let name = $("#results_table")[0].tBodies[0].rows[0].cells[0].textContent;
+        let address = $("#results_table")[0].tBodies[0].rows[0].cells[1].textContent;
+        let map_image_url = $("#map_result")[0].src;
+        console.log("name:" + name);
+        console.log("address:" + address);
+        console.log("map image url:" + map_image_url);
 
-        // let favorite_response = await axios.post()
+        let favorite_response = axios.post('/favorites/add', {
+            name, address, map_image_url
+        });
         
-
-        //not working  #######
-        //.children[1].firstElementChild.children[0].innerText
-        //[0].tBodies[0].rows[0].cells[0].textContent
     });    
     
+    // $("#favoriteSearch").on("keyup", function () {
+    //     var value = $(this).val().toLowerCase();
+    //     $(".card *").filter(function () {
+    //       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //     });
+    //   });
+    $('#favoriteSearch').keyup(function (){
+        $('.card').removeClass('d-none');
+        var filter = $(this).val(); // get the value of the input, which we filter on
+        $('#cards').find('.card .card-body p:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
+    })
+
+    
+
     });
 
 
