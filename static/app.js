@@ -31,7 +31,7 @@ $(document).ready(function () {
     $('#favoriteSearch').keyup(function (){
         $('.card').removeClass('d-none');
         var filter = $(this).val(); // get the value of the input, which we filter on
-        $('#cards').find('.card .card-body p:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
+        $('#cards').find('.card .card-body:not(:contains("'+filter+'"))').parent().addClass('d-none');
     })
 
     
