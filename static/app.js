@@ -22,19 +22,19 @@ $(document).ready(function () {
         
     });    
     
-    // $("#favoriteSearch").on("keyup", function () {
-    //     var value = $(this).val().toLowerCase();
-    //     $(".card *").filter(function () {
-    //       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //     });
-    //   });
-    $('#favoriteSearch').keyup(function (){
-        $('.card').removeClass('d-none');
-        var filter = $(this).val(); // get the value of the input, which we filter on
-        $('#cards').find('.card .card-body:not(:contains("'+filter+'"))').parent().addClass('d-none');
-    })
+    // $('#favoriteSearch').keyup(function (){
+    //     $('.card').removeClass('d-none');
+    //     var filter = $(this).val(); // get the value of the input, which we filter on
+    //     $('#cards').find('.card .card-body h4:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
+    // })
 
-    
+    $("#favoriteSearch").on("keyup", function() {
+      console.log("activated")
+      var value = $(this).val().toLowerCase();
+      $("#cards .col").filter(function() {
+        $(this).toggle($(this).find('.card-body').text().toLowerCase().indexOf(value) > -1)
+      });
+    });
 
     });
 
