@@ -76,13 +76,14 @@ function geoFindMe() {
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
       //mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °
   
-      let google_call = axios.get(`https:/maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${config.apiKey}`).then((result) => {
-        console.log(google_call);
-        let derived_address = result.data.results[0].formatted_address;
-        console.log(derived_address);
-        window.location.replace(`/results/${derived_address}`)
-      });
+    //   let google_call = axios.get(`https:/maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${config.apiKey}`).then((result) => {
+    //     console.log(google_call);
+    //     let derived_address = result.data.results[0].formatted_address;
+    //     console.log(derived_address);
+    //     window.location.replace(`/results/${derived_address}`)
+    //   });
 
+      let google_call = axios.post(`/google_search/${latitude}${longitude}`)
       
       
     }
