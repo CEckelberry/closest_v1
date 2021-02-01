@@ -166,13 +166,26 @@ def google_search(latlng):
         flash("Access unauthorized", "danger")
         return redirect("/login")
 
-    data = request.json()
+    # print(latlng)
 
-    google_url = f"https:/maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}"
+    comma_location = latlng.find(",")
+    # print(comma_location)
+
+    latitude = latlng[0:comma_location]
+
+    longitude = latlng[comma_location+1:]
+
+    # print(f"latitude: {latitude} longitude: {longitude}")
+
+    google_url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longitude}&key={GOOGLE_API_KEY}"
     google_resp = requests.get(google_url)
-    print(google_resp)
+    google_resp_to_dict = json.loads(google_resp.text)
+    # print(google_resp_to_dict)
 
-    return redirect(f"/results/")
+    formatted_address = google_resp_to_dict["results"][0]["formatted_address"]
+    print(formatted_address)
+
+    return redirect(f"/results/{formatted_address}")
 
 
 @app.route("/results/<string:search>", methods=["GET", "POST"])
@@ -201,6 +214,7 @@ def show_results(search):
     stations_dict = json.loads(transit_resp2.text)
     print(stations_dict)
     if "notices" in stations_dict:
+        print("Made it into redirect loop")
         sad_message = (
             f"Maybe try living somewhere closer to civilization, {g.user.username}"
         )

@@ -82,10 +82,13 @@ function geoFindMe() {
     //     console.log(derived_address);
     //     window.location.replace(`/results/${derived_address}`)
     //   });
-
-      let google_call = axios.post(`/google_search/${latitude}${longitude}`)
+    
+      function post_request() {
+       //await axios.post(`/google_search/${latitude},${longitude}`);
+       $("#geoloc").attr('action', `/google_search/${latitude},${longitude}`).submit();
+      };
       
-      
+      post_request();
     }
   
     function error() {
