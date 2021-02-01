@@ -9,9 +9,11 @@
     <div class="col-md-10 col-lg-8">
         <h4 class="join-message text-center mt-4 mb-5">Search by your location or address below!</h2>
         <div class="text-center mt-4 mb-5">
-            <button class="btn blue-gradient btn-lg text-center" id="find-me">Show my location</button><br/>
-            <p id="status" class="text-center"></p>
-            <a id="map-link" target="_blank" class="text-center"></a>
+            <form method="POST" action="" id="geoloc">
+                <button class="btn blue-gradient btn-lg text-center" id="find-me" type="submit">Show my location</button><br/>
+                <p id="status" class="text-center"></p>
+                <a id="map-link" target="_blank" class="text-center"></a>
+            </form>
         </div>
         <form class="md-form mr-auto form-lg text-center input-with-post-icon border border-light p-5 mt-5" method="POST">
                 <i class="fas fa-map input-prefix" id="map_icon"></i>
