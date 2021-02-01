@@ -208,7 +208,7 @@ def show_results(search):
     here_search_longitude = search_lat_long["lng"]
     # print(f"lat: {here_search_latitude} and long: {here_search_longitude}")
 
-    public_transit_URL = f"https://transit.hereapi.com/v8/stations?in={here_search_latitude},{here_search_longitude}&return=transport,address&maxPlaces=50&apiKey={HERE_API_KEY}"
+    public_transit_URL = f"https://transit.hereapi.com/v8/stations?in={here_search_latitude},{here_search_longitude};r=50000&return=transport,address&maxPlaces=50&apiKey={HERE_API_KEY}"
     transit_resp2 = requests.get(public_transit_URL)
     # print(transit_resp2.text)
     stations_dict = json.loads(transit_resp2.text)
