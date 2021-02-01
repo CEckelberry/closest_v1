@@ -160,6 +160,21 @@ def home_page():
     return render_template("home.html", form=form)
 
 
+@app.route("/google_search/<string:latlng>", methods=["GET", "POST"])
+def google_search(latlng):
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect("/login")
+
+    data = request.json()
+
+    google_url = f"https:/maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}"
+    google_resp = requests.get(google_url)
+    print(google_resp)
+
+    return redirect(f"/results/")
+
+
 @app.route("/results/<string:search>", methods=["GET", "POST"])
 def show_results(search):
 
