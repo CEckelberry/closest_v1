@@ -62,44 +62,63 @@ $('#flash').delay(1200).fadeOut(700)
 
 function geoFindMe() {
 
+    var startPos;
+    var nudge = document.getElementById("nudge");
+
+    var showNudgeBanner = function() {
+      nudge.style.display = "block";
+    };
+
+    var hideNudgeBanner = function() {
+      nudge.style.display = "none";
+    };
+
+    var nudgeTimeoutId = setTimeout(showNudgeBanner, 5000);
+
     const status = document.querySelector('#status');
     const mapLink = document.querySelector('#map-link');
+
+    var geoOptions = {
+      maximumAge: 5 * 60 * 1000,
+      enableHighAccuracy: true
+    }
   
     mapLink.href = '';
     mapLink.textContent = '';
-  
-    function success(position) {
-      const latitude  = position.coords.latitude;
-      const longitude = position.coords.longitude;
+    var geoSuccess = function(position) {
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
+      
+      console.log(latitude, longitude)
   
       status.textContent = '';
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-      //mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °
-  
-    //   let google_call = axios.get(`https:/maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${config.apiKey}`).then((result) => {
-    //     console.log(google_call);
-    //     let derived_address = result.data.results[0].formatted_address;
-    //     console.log(derived_address);
-    //     window.location.replace(`/results/${derived_address}`)
-    //   });
-    
+
       function post_request() {
-       //await axios.post(`/google_search/${latitude},${longitude}`);
+
+        console.log("You made it to the post request!")
+       $("#address_search").remove();
        $("#geoloc").attr('action', `/google_search/${latitude},${longitude}`).submit();
       };
       
       post_request();
     }
   
-    function error() {
-      status.textContent = 'Unable to retrieve your location';
-    }
+    var geoError = function(error) {
+      console.log('Error occurred. Error code: ' + error.code);
+      // error.code can be:
+      //   0: unknown error
+      //   1: permission denied
+      //   2: position unavailable (error response from location provider)
+      //   3: timed out
+    };
+
   
     if(!navigator.geolocation) {
       status.textContent = 'Geolocation is not supported by your browser';
     } else {
       status.textContent = 'Locating…';
-      navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
     }
   
   }
