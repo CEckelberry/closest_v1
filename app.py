@@ -242,7 +242,7 @@ def show_results(search):
         )
     except:
         address_string = str(
-            +closest_station_address["street"]
+            closest_station_address["street"]
             + " "
             + closest_station_address["city"]
             + " "
