@@ -231,13 +231,21 @@ def show_results(search):
 
     closest_station_address = stations_dict["stations"][0]["place"]["address"]
     address_string = str(
-        closest_station_address["houseNumber"]
-        + " "
-        + closest_station_address["street"]
-        + " "
-        + closest_station_address["city"]
-        + " "
-        + closest_station_address["postalCode"]
+        try:
+            closest_station_address["houseNumber"]
+            + " "
+            + closest_station_address["street"]
+            + " "
+            + closest_station_address["city"]
+            + " "
+            + closest_station_address["postalCode"]
+        except:
+            + closest_station_address["street"]
+            + " "
+            + closest_station_address["city"]
+            + " "
+            + closest_station_address["postalCode"]
+
     )
     # print(f"address string: {address_string}")
 
