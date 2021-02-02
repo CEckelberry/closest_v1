@@ -173,7 +173,7 @@ def google_search(latlng):
 
     latitude = latlng[0:comma_location]
 
-    longitude = latlng[comma_location+1:]
+    longitude = latlng[comma_location + 1 :]
 
     # print(f"latitude: {latitude} longitude: {longitude}")
 
@@ -230,8 +230,8 @@ def show_results(search):
     # print(combined_address_search)
 
     closest_station_address = stations_dict["stations"][0]["place"]["address"]
-    address_string = str(
-        try:
+    try:
+        address_string = str(
             closest_station_address["houseNumber"]
             + " "
             + closest_station_address["street"]
@@ -239,14 +239,16 @@ def show_results(search):
             + closest_station_address["city"]
             + " "
             + closest_station_address["postalCode"]
-        except:
-            + closest_station_address["street"]
+        )
+    except:
+        address_string = str(
+            +closest_station_address["street"]
             + " "
             + closest_station_address["city"]
             + " "
             + closest_station_address["postalCode"]
+        )
 
-    )
     # print(f"address string: {address_string}")
 
     google_map_URL = f"https://www.google.com/maps/embed/v1/place?key={GOOGLE_API_KEY}&q={combined_address_search}&center={here_search_latitude},{here_search_longitude}"
