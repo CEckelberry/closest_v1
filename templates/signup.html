@@ -13,10 +13,10 @@
             <p class="h4 mb-4">Sign up</p>
 
             {% for field in form if field.widget.input_type != 'hidden' %}
+                {{ field(placeholder=field.label.text, class="form-control mt-4") }}
                 {% for error in field.errors %}
                 <span class="text-danger">{{ error }}</span>
                 {% endfor %}
-                {{ field(placeholder=field.label.text, class="form-control mt-4") }}
             {% endfor %}
 
             <button class="font-weight-bold btn winter-neva-gradient color-block btn-block my-4 waves-effect z-depth-0" type="submit"">Sign up</button>

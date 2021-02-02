@@ -10,7 +10,7 @@
 
   var pluginName = "passtrength",
       defaults = {
-        minChars: 8,
+        minChars: 6,
         passwordToggle: true,
         tooltip: true,
         textWeak: "Weak",

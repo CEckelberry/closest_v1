@@ -142,8 +142,7 @@ def home_page():
     form = SearchForm()
 
     if not g.user:
-        flash("Access unauthorized", "danger")
-        return redirect("/login")
+        return redirect("/signup")
 
     if form.validate_on_submit():
 
