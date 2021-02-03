@@ -78,13 +78,6 @@ window.onload = function geoFindMe() {
     const status = document.querySelector('#status');
     const mapLink = document.querySelector('#map-link');
 
-<<<<<<< HEAD
-    mapLink.href = '';
-    mapLink.textContent = '';
-    var geoSuccess = function(position) {
-      latitude = position.coords.latitude;
-      longitude = position.coords.longitude;
-=======
     var geoOptions = {
       maximumAge: 5 * 60 * 1000,
       enableHighAccuracy: true
@@ -95,24 +88,13 @@ window.onload = function geoFindMe() {
     var geoSuccess = function(position) {
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
->>>>>>> 2225c78eb93206279bfffa77d6d0a23805032acb
       
       console.log(latitude, longitude)
   
       status.textContent = '';
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
 
-<<<<<<< HEAD
-=======
-      function post_request() {
 
-        console.log("You made it to the post request!")
-       $("#address_search").remove();
-       $("#geoloc").attr('action', `/google_search/${latitude},${longitude}`).submit();
-      };
-      
-      post_request();
->>>>>>> 2225c78eb93206279bfffa77d6d0a23805032acb
     }
   
     var geoError = function(error) {
@@ -123,13 +105,6 @@ window.onload = function geoFindMe() {
       //   2: position unavailable (error response from location provider)
       //   3: timed out
     };
-<<<<<<< HEAD
-    var geoOptions = {
-      maximumAge: 5 * 60 * 1000,
-      enableHighAccuracy: true
-    };
-=======
->>>>>>> 2225c78eb93206279bfffa77d6d0a23805032acb
 
   
     if(!navigator.geolocation) {
