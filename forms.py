@@ -50,4 +50,4 @@ class LoginForm(FlaskForm):
 class SearchForm(FlaskForm):
     """Search Form"""
 
-    address = StringField("Address", validators=[DataRequired()])
+    address = StringField("Address")

@@ -35,7 +35,7 @@ $(document).ready(function () {
         $(this).toggle($(this).find('.card-body').text().toLowerCase().indexOf(value) > -1)
       });
     });
-
+    
     });
 
 
@@ -60,48 +60,22 @@ $('#password').passtrength({
 
 $('#flash').delay(1200).fadeOut(700)
 
-function geoFindMe() {
-
-    var startPos;
-    var nudge = document.getElementById("nudge");
-
-    var showNudgeBanner = function() {
-      nudge.style.display = "block";
-    };
-
-    var hideNudgeBanner = function() {
-      nudge.style.display = "none";
-    };
-
-    var nudgeTimeoutId = setTimeout(showNudgeBanner, 5000);
+window.onload = function geoFindMe() {
 
     const status = document.querySelector('#status');
     const mapLink = document.querySelector('#map-link');
 
-    var geoOptions = {
-      maximumAge: 5 * 60 * 1000,
-      enableHighAccuracy: true
-    }
-  
     mapLink.href = '';
     mapLink.textContent = '';
     var geoSuccess = function(position) {
-      let latitude = position.coords.latitude;
-      let longitude = position.coords.longitude;
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
       
       console.log(latitude, longitude)
   
       status.textContent = '';
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
 
-      function post_request() {
-
-        console.log("You made it to the post request!")
-       $("#address_search").remove();
-       $("#geoloc").attr('action', `/google_search/${latitude},${longitude}`).submit();
-      };
-      
-      post_request();
     }
   
     var geoError = function(error) {
@@ -112,6 +86,10 @@ function geoFindMe() {
       //   2: position unavailable (error response from location provider)
       //   3: timed out
     };
+    var geoOptions = {
+      maximumAge: 5 * 60 * 1000,
+      enableHighAccuracy: true
+    };
 
   
     if(!navigator.geolocation) {
@@ -120,11 +98,21 @@ function geoFindMe() {
       status.textContent = 'Locating…';
       navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
     }
-  
+    
   }
-  
-  document.querySelector('#find-me').addEventListener('click', geoFindMe);
 
+  //
 
+  $('#geoloc').on('submit', (e) => {
+    e.preventDefault();
+    console.log("You made it to the post request!");
+    navigator.geolocation.getCurrentPosition(success);
 
-
+    function success(position) {
+      //$("#geoloc").attr('action', `/google_search/${position.coords.latitude},${position.coords.longitude}`).submit();
+      const theForm = document.createElement('form');
+      theForm.setAttribute('action', `/google_search/${position.coords.latitude},${position.coords.longitude}`);
+      document.body.appendChild(theForm);
+      theForm.submit();
+    }
+});
